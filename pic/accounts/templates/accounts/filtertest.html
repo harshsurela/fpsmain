@@ -1,0 +1,5 @@
+<form method="POST" action="{% url 'test' %}">
+    {% csrf_token %}
+    <input type="date" name="d">
+    <input type="submit" value="submit">
+</form>

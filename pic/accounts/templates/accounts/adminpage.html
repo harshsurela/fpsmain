@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            AdminPanel
+        </title>
+        <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    </head>
+    <body>
+      {% if message %}
+      <script>
+        alert("{{message}}")
+      </script>
+      {% endif %}
+
+      {% if notify %}
+      {% for i in notify %}
+      <script>
+        alert("{{i.title}}")
+      </script>
+      {% endfor %}
+      {% endif %}
+      <a href="{% url 'createToken' %}">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Create Token
+      </a>
+      <a href="{% url 'tokens' %}">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Tokens
+      </a>
+
+
+     
+      <a href="{% url 'userlist' %}">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Users
+      </a>
+
+
+      <a href="{% url 'notifyadminuser' %}">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Notifications
+      </a>
+
+      <a href="{% url 'getnotify' %}">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Get my Notifications
+      </a>
+
+
+
+      <a href="{% url 'logout' %}">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Logout
+      </a>
+
+    </body>
+</html>

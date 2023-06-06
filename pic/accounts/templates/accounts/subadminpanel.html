@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Sub-Admin panel
+        </title>
+        <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    </head>
+    <body>
+      {% if message %}
+      <script>
+        alert("{{message}}")
+      </script>
+      {% endif %}
+
+      {% if notify %}
+      {% for i in notify %}
+      <script>
+        alert("{{i.title}}")
+      </script>
+      {% endfor %}
+      {% endif %}
+      <a href="{% url 'subcreateuser' %}">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Create user
+      </a>
+
+      <a href="{% url 'subuserlist' %}">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Users
+      </a>
+
+
+      <a href="{% url 'sublogout' %}">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Logout
+      </a>
+
+    </body>
+</html>

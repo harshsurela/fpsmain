@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Super Admin Panel
+        </title>
+        <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+        <script>
+          function del(){
+            var r = confirm("Delete all the images that are 3 days old");
+            if (r == true) {
+              window.location.href="{% url 'deleteoldimg' %}"
+            } 
+          }
+        </script>
+    </head>
+    <body>
+      <a href="{% url 'createadmin' %}">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Create Admin
+      </a>
+
+      <a href="{% url 'superadminlist' %}">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Admin
+      </a>
+
+
+      <a href="{% url 'superuserlist' %}">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Users
+      </a>
+
+      <a href="{% url 'notify' %}">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Notifications
+      </a>
+
+      <a href="{% url 'adminnotify' %}">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Admin Notifications
+      </a>
+
+      <a onclick=del()>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Delete data
+      </a>
+
+
+      <a href="{% url 'logoutsuper' %}">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Logout
+      </a>
+
+    </body>
+</html>

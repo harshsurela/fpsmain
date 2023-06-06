@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <style>
+        body {
+            display: flex;
+
+/* color: aliceblue; */
+background: linear-gradient(#1c3057, rgb(5, 62, 128));
+background-repeat:no-repeat;
+min-height: 100vh;
+
+}
+
+.crousel-img{
+    width: 50%;
+    height: 550px;
+}
+
+.carousel-caption { bottom:-95px; }
+.carousel-inner { padding-bottom:95px; }
+/* .cimg{
+  color: black;
+} */
+
+.carousel-caption{
+  background-color: black;
+}
+
+
+@media (max-width: 768px){
+
+.my-container{
+    flex-direction: column;
+}
+
+.body-main{
+    width: 100%;
+}
+
+.body-side{
+    width: 100%;
+}
+
+.add-form{
+    padding: 20px 100px;
+}
+
+.pagination{
+    margin: 20px 40%;
+}
+
+.social-media-acc{
+    padding: 20px 100px;
+}
+
+.add-alert{
+    margin: 30px 25px;
+}
+
+.carousel-control-prev {
+  margin-left: -100px;
+}
+
+.carousel-control-next {
+  margin-right: -100px;
+}
+
+
+.crousel-img{
+    width: 100%;
+    height: 400px;
+ }
+
+}
+
+@media (max-width: 500px){
+
+.add-form{
+    padding: 20px 30px;
+}
+
+.social-media-acc{
+    padding: 20px 30px;
+}
+
+.crousel-img{
+    width: 100%;
+    height: 250px;
+ }
+
+}
+
+
+</style>
+
+    <title>Users</title>
+  </head>
+  <body >
+
+
+    <div class="list-group container my-5 ml-5" >
+
+
+      <div class="row my-5">
+
+            <div class="col">
+              <ul class="list-group">
+                <li class="list-group-item active">User Details</li>
+                <li class="list-group-item">Client name : {{pro.username}} </li>
+                <li class="list-group-item">Father Name : {{pro.father_name}}</li>
+                <li class="list-group-item">Mother Name : {{pro.mother_name}}</li>
+                <li class="list-group-item">Date of Birth : {{pro.DOB}}</li>
+                <li class="list-group-item">Address : {{pro.address}} </li>
+                <li class="list-group-item">Contact NO. : {{pro.contactno}}</li>
+                <li class="list-group-item">Email : {{pro.email}}</li>
+                <li class="list-group-item">School : {{pro.school}}</li>
+                <li class="list-group-item">blood Group : {{pro.bloodGroup}}</li>
+                <li class="list-group-item">Standard : {{pro.standard}}</li>
+                <li class="list-group-item">Remarks : {{pro.remarks}}</li>
+                <li class="list-group-item">Access Token. : {{pro.token}}</li>
+
+              </ul>
+
+            </div>
+            <div class="col">
+              <a href="#" class="list-group-item list-group-item-action active">
+                Images added by {{pro.user}}
+              </a>
+              {% for i in user %}
+              {% if i.camera_selected == "True" %}
+              <div class="my-3 list-group-item d-flex justify-content-between align-items-center list-group-item-action ">
+
+                <a href="/media/{{i.thumbnail}}">
+                  {{i.name}}
+                  {% if i.camera_selected == "True" %}
+                  Captured using camera
+                  {% else %}
+                  Captured using scanner
+                  {% endif %}
+              </a>
+              <a href="{% url 'adelete' what='img' id=i.id %}" class=" float-right badge badge-primary badge-pill">delete</a>
+              </div>
+             {% endif %}
+
+
+
+              <div class="my-3 list-group-item d-flex justify-content-between align-items-center list-group-item-action ">
+
+              <a href="/media/{{i.processedimg}}">
+                  {{i.name}}  processed
+
+                  {% if i.camera_selected == "True" %}
+                  Captured using camera
+                  {% else %}
+                  Captured using scanner
+                  {% endif %}
+              </a>
+                <a href="{% url 'adelete' what='img' id=i.id %}" class=" float-right badge badge-primary badge-pill">delete</a>
+              </div>
+
+
+              {% endfor %}
+            </div>
+
+      </div>
+
+
+      <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+
+        <div class="carousel-inner">
+
+          <div class="carousel-item active">
+            {% if user.0.camera_selected == "True" %}
+            <img src="/media/{{user.0.thumbnail}}"  class="image d-block img-responsive center-block  crousel-img" style="margin: auto;" alt="...">
+            <img src="/media/{{user.0.processedimg}}"  class="image d-block img-responsive center-block  crousel-img" style="margin: auto;" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>{{user.0.name}} raw and processed</h5>
+            {% else %}
+            <img src="/media/{{user.0.thumbnail}}"  class="image d-block img-responsive center-block  crousel-img" style="margin: auto;" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>{{user.0.name}}</h5>
+             {% endif %}
+            </div>
+          </div>
+
+          {% for i in user|slice:"1:" %}
+          <div class="carousel-item">
+          <div class ='row'>
+              {% if i.camera_selected == "True" %}
+            <img src="/media/{{i.thumbnail}}"  class="image d-block img-responsive center-block  crousel-img" style="margin: auto;" alt="...">
+            <img src="/media/{{i.processedimg}}"  class="image d-block img-responsive center-block  crousel-img" style="margin: auto;" alt="...">
+            </div>
+            <div class="carousel-caption d-none d-md-block">
+              <h5 class="cimg">{{i.name}} raw and processed </h5>
+              {% else %}
+              <img src="/media/{{i.thumbnail}}"  class="image d-block img-responsive center-block  crousel-img" style="margin: auto;" alt="...">
+
+            </div>
+            <div class="carousel-caption d-none d-md-block">
+              <h5 class="cimg">{{i.name}}</h5>
+              {% endif %}
+            </div>
+          </div>
+
+          {% endfor %}
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+      <div class="container row" >
+        <input type="button" value="Rotate 90'  clockwise" class="btn btn-info my-3 mx-3 " id="clickme">
+        <input type="button" value="Rotate 90' anticlockwise" class="btn btn-info my-3 mx-3" id="clickme2">
+      </div>
+
+    </div>
+
+    <div class="column m-5">
+      <button type="button" onclick="window.location.href='{% url 'adminpanel' %}'"  class="btn btn-info my-3">Home</button>
+      <button type="button" onclick="window.location.href='{% url 'logout' %}'" class="btn btn-danger">Logout</button>
+      <button type="button" onclick="window.location.href='{% url 'edituser' id=pro.username who='a' %}'" class="btn btn-danger">Edit Details</button>
+
+    </div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+    <script >
+      $(document).ready(function() {
+    $(document).on('click','#clickme',function(){
+        $(".image").css({'transform': 'rotate(90deg)'});
+    });
+    $(document).on('click','#clickme2',function(){
+        $(".image").css({'transform': 'rotate(360deg)'});
+    });
+});
+
+    </script>
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+    <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>

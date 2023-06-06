@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details</title>
+
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* The Modal (background) */
+.modal {
+  width: 400px;
+    padding: 40px;
+    background: rgba(0,0,0,.5);
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0,0,0,.6);
+    border-radius: 10px;
+    display: none;
+  
+}
+
+.required:after {
+    content:" *";
+    color: red;
+  }
+
+/* Modal Content */
+.modal-content {
+  background-color: #363333;
+  
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+        body {
+    margin:0;
+    padding:0;
+    font-family: sans-serif;
+    background: linear-gradient(#a5bae2, #1e1e1f);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+p{
+  color: rgb(218, 206, 206);
+  font-size: 16px;
+}
+  .login-box {
+    width: 400px;
+    padding: 40px;
+    background: rgba(0,0,0,.5);
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0,0,0,.6);
+    border-radius: 10px;
+  }
+
+  .login-box h2,h1,h3 {
+    margin: 0 0 30px;
+    padding: 0;
+    color: #fff;
+    text-align: center;
+  }
+
+  .login-box .user-box {
+    position: relative;
+  }
+
+  .login-box .user-box input,textarea,address {
+    
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 30px;
+    
+    border: none;
+    border-bottom: 1px solid #fff;
+    outline: none;
+    background: transparent;
+  }
+  ::placeholder {
+    font-size: 16px;
+    color: #03e9f4;;
+}
+  .login-box .user-box label {
+    position: absolute;
+    top:0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    pointer-events: none;
+    transition: .5s;
+  }
+  .login-box .user-box textarea:focus ~ label,
+  .login-box .user-box textarea:not([value]) ~ label{
+    top: -20px;
+    left: 0;
+    color: #03e9f4;
+    font-size: 12px;
+  }
+
+  .login-box .user-box input:focus ~ label,
+  .login-box .user-box input:not([value]) ~ label{
+    top: -20px;
+    left: 0;
+    color: #03e9f4;
+    font-size: 12px;
+  }
+
+  .login-box form a {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    color: #03e9f4;
+    font-size: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: .5s;
+    margin-top: 40px;
+    letter-spacing: 4px
+  }
+
+  .login-box a:hover {
+    background: #03e9f4;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #03e9f4,
+                0 0 25px #03e9f4,
+                0 0 50px #03e9f4,
+                0 0 100px #03e9f4;
+  }
+
+  .login-box a span {
+    position: absolute;
+    display: block;
+  }
+
+  .login-box a span:nth-child(1) {
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #03e9f4);
+    animation: btn-anim1 1s linear infinite;
+  }
+
+  @keyframes btn-anim1 {
+    0% {
+      left: -100%;
+    }
+    50%,100% {
+      left: 100%;
+    }
+  }
+
+  .login-box a span:nth-child(2) {
+    top: -100%;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, #03e9f4);
+    animation: btn-anim2 1s linear infinite;
+    animation-delay: .25s
+  }
+
+  @keyframes btn-anim2 {
+    0% {
+      top: -100%;
+    }
+    50%,100% {
+      top: 100%;
+    }
+  }
+
+  .login-box a span:nth-child(3) {
+    bottom: 0;
+    right: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(270deg, transparent, #03e9f4);
+    animation: btn-anim3 1s linear infinite;
+    animation-delay: .5s
+  }
+
+  @keyframes btn-anim3 {
+    0% {
+      right: -100%;
+    }
+    50%,100% {
+      right: 100%;
+    }
+  }
+
+  .login-box a span:nth-child(4) {
+    bottom: -100%;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(360deg, transparent, #03e9f4);
+    animation: btn-anim4 1s linear infinite;
+    animation-delay: .75s
+  }
+
+  .submitbutton{
+    background-color: transparent;
+    border: transparent;
+    color: white;
+  }
+
+  @keyframes btn-anim4 {
+    0% {
+      bottom: -100%;
+    }
+    50%,100% {
+      bottom: 100%;
+    }
+  }
+
+    </style>
+</head>
+<body>
+  {% if message %}
+  <script>
+    alert("{{message}}")
+  </script>
+  {% endif %}
+    <div class="login-box">
+        <h1>Fill the Details</h1>
+        
+        
+        <form action="{% url 'filldetail' %}" id="my_form" method="POST">
+            {% csrf_token %}
+          <div class="user-box">
+            <input type="text" name = "username" form="my_form" required>
+            <label class="required">Name</label>
+          </div>
+          <div class="user-box">
+            <input type="text" name = "fathername" form="my_form" required>
+            <label class="required">Father's name</label>
+          </div>
+          <div class="user-box">
+            <input type="text" name = "mothername" form="my_form" required>
+            <label class="required">Mother's name</label>
+          </div>
+          <div class="user-box">
+            <input type="date"id="datefield" name="dob" form="my_form" required>
+            <label class="required">DOB</label>
+          </div>
+          <div class="user-box">
+            <input type="email" name = "email" form="my_form" >
+            <label >email</label>
+          </div>
+          <div class="user-box">
+            <input type="text" name = "school" form="my_form" >
+            <label >school</label>
+          </div>
+          <div class="user-box">
+            <!-- <input type="text-area" name = "address"> -->
+            
+            <textarea name="address" 
+           id="address" cols="10" rows="3"  form="my_form" required></textarea>
+           <label class="required">Address</label>
+            
+          </div>
+          <div class="user-box">
+            <input type="tel" id="phone" name="contact" pattern="[0-9]{10,15}" form="my_form" required>
+            
+            <label class="required">Contact number</label>
+          </div>
+          <div class="user-box">
+            <input type="text" name = "blood" form="my_form">
+            <label>Blood Group.</label>
+          </div>
+          <div class="user-box">
+            <input type="text" name = "standard" form="my_form">
+            <label>standard</label>
+          </div>
+          <div class="user-box">
+            <input type="text" name = "remarks" form="my_form">
+            <label>Remarks.</label>
+          </div>
+          <div class="user-box">
+            <input type="text" name = "idno" form="my_form">
+            <label>Access Token.</label>
+          </div>
+          
+          <!-- <div class="user-box">
+            <input type="checkbox" id="myBtn" form="my_form" name = "concent">
+            <label>Consent</label>
+          </div>
+           -->
+
+          <a href="javascript:{}" >
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <button class=" submitbutton" type="submit">submit</button> 
+          </a>
+
+          
+
+        </form>
+        <!-- Trigger/Open The Modal -->
+<!-- <button id="myBtn">Open Modal</button> -->
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h1>Concent Form<h1>
+    <p>Information provided herein is confidential, privileged and protected by work product immunity and other legal rules. The contents of this publication reflect the analysis evaluated and derived upon by way of Dermatoglyphics Report.Company certifies that Fingerprints captured are deleted as soon as Report is generated. We hereby declare that we don’t store your digital footprints after Dermatoglyphics Report analysis is done.I hereby give consent for the collection and processing of biometric data for the person whose detail have been submitted for use with the company for evaluation of Fingerprints and making a Dermatoglyphics Report.</p>
+    <a id='acceptConcent' href="javascript:{}" >
+      
+      Accept
+    </a>
+  </div>
+
+</div>
+
+<script>
+// Use Javascript
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0 so need to add 1 to make it 1!
+var yyyy = today.getFullYear();
+if(dd<10){
+  dd='0'+dd
+} 
+if(mm<10){
+  mm='0'+mm
+} 
+
+today = yyyy+'-'+mm+'-'+dd;
+document.getElementById("datefield").setAttribute("max", today);
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+
+// When the user clicks the button, open the modal 
+var con = document.getElementById("acceptConcent");
+  con.onclick = function(){
+    var checkBox = document.getElementById("myBtn");
+    checkBox.checked=true;
+    modal.style.display = "none";
+
+  }
+
+
+btn.onclick = function() {
+   // Get the checkbox
+   var checkBox = document.getElementById("myBtn");
+  // Get the output text
+
+  // If the checkbox is checked, display the output text
+  if (checkBox.checked == true){
+    modal.style.display = "block";
+  } else {
+    modal.style.display = "none";
+  }
+ 
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  var checkBox = document.getElementById("myBtn");
+    checkBox.checked=false
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+
+      </div>
+</body>
+</html>

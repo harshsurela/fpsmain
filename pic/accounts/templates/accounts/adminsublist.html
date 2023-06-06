@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <style>
+        body {
+            display: flex;
+
+color: aliceblue;
+background: linear-gradient(#1c3057, rgb(5, 62, 128));
+background-repeat:no-repeat;
+min-height: 100vh;
+
+}
+</style>
+
+    <title>Sub admin</title>
+  </head>
+  <body>
+    <div class="list-group container my-5 ml-5">
+        <a href="#" class="list-group-item list-group-item-action active">
+          Sub admin
+        </a>
+        {% for i in users %} 
+            <div  class="my-3 list-group-item d-flex justify-content-between align-items-center list-group-item-action ">
+              <a href="{% url 'subuserlistview' cid=i.user %}">
+                {{i.user}}
+              </a>
+
+           
+              <div class="col" >
+                
+                <!-- <a href="{% url 'editadmin' id=i.user %}" class="float-right mx-2 badge badge-primary badge-pill">edit</a> -->
+                <a href="{% url 'subdelete' cid=i.user %}" onclick="return confirm('Are you sure you want to delete this item?');" class="float-right mx-2 badge badge-primary badge-pill">delete</a>
+                <!-- {% if i.blocked is True %}
+                  <a href="{% url 'blockuser' id=i.user ac='un' %}" class="float-right  badge badge-primary badge-pill">unblock</a>
+                {% else %}
+                  <a href="{% url 'blockuser' id=i.user ac='bu' %}" class="float-right  badge badge-primary badge-pill">block</a>
+                {% endif %} -->
+
+              </div>
+             
+              </div>
+           
+        {% endfor %}
+       
+      </div>
+    
+
+      <div class="column m-5">
+        <button type="button" onclick="window.location.href='{% url 'adminpanel' %}'"  class="btn btn-info my-3">Home</button>
+        <button type="button" onclick="window.location.href='{% url 'logout' %}'" class="btn btn-danger">Logout</button>
+      </div>
+  
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+    <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>
