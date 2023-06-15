@@ -296,7 +296,7 @@ def getfiles(request,un):
     useracc = userprofile.objects.get(username=un)
     contentu = content.objects.filter(added_by =useracc )
     f = open(f"{useracc}details.txt","w")
-    f.write(f"Username:{useracc.username}\nFather name:{useracc.father_name}\nMother Name:{useracc.mother_name}\nDOB:{useracc.DOB}\nAddress:{useracc.address}\nContact No.:{useracc.contactno}\nE-mail:{useracc.email}\nSchool:{useracc.school}\nBlood Group:{useracc.bloodGroup}\nStandard:{useracc.standard}\nRemarks:{useracc.remarks}\nAccessToken:{useracc.token}")
+    f.write(f"Username:{useracc.username}\nFather name:{useracc.father_name}\nMother Name:{useracc.mother_name}\nDOB:{useracc.DOB}\nAddress:{useracc.address}\nContact No.:{useracc.contactno}\nE-mail:{useracc.email}\nSchool:{useracc.school}\nBlood Group:{useracc.bloodGroup}\nStandard:{useracc.standard}\nRemarks:{useracc.remarks}")
     f.close()
 
     fn = []

@@ -42,7 +42,6 @@ class userprofile(models.Model):
     standard = models.CharField(max_length=100)
     bloodGroup = models.CharField(max_length=10)
     remarks=models.CharField(max_length=100,default="")
-    token=models.ForeignKey('AccessToken',null=True,on_delete=models.CASCADE)
     # def save(self, *args, **kwargs):
     #     if self.subadmin is None:  # Set default reference
     #         self.subadmin = subadminuser.objects.get(admin=self.admin)

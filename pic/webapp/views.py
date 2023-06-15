@@ -50,17 +50,6 @@ def loginPage(request):
 
 def filldetails(request):
     if request.method == "POST":
-        try:
-            idno = ""
-            idno = request.POST["idno"]
-            token=AccessToken.objects.get(token=idno)
-            if token.is_used == False:
-                token.is_used = True
-                token.save()
-            else:
-                return render(request,"webapp/filldetail.html",{"message":"Token already used Or Wrong"})
-        except:
-            pass
         username = request.POST["username"]
         fathername = request.POST["fathername"]
         mothername = request.POST["mothername"]
@@ -92,8 +81,6 @@ def filldetails(request):
         userpro.address = address
         userpro.contactno = contact
         userpro.username = username
-        token=AccessToken.objects.get(token=idno)
-        userpro.token=AccessToken(token).id
         userpro.school = school
         userpro.consent = concent
         userpro.bloodGroup = blood
@@ -104,19 +91,19 @@ def filldetails(request):
         if userpro.consent == True:
             return redirect("options")
         else:
-            return render(request,"webapp/consent.html",{'token':token.id})
+            return render(request,"webapp/consent.html",{'uname':userpro.username})
     # user =request.user
     # userpro = userprofile.objects.get(user = user)
     
     return render(request,"webapp/filldetail.html")
 
-def concent(request,token):
-    userpro = userprofile.objects.get(token = token)
+def concent(request,uname):
+    userpro = userprofile.objects.get(username =uname)
     userpro.consent = True
     userpro.save()
-    # make a session variable for token
-    request.session['token'] = token
 
+    # make a session variable for username
+    request.session['uname'] = uname
     return render(request,"options.html")
 
 def options(request):
@@ -176,7 +163,7 @@ def index(request,fno,retake,ftype):
     elif ftype=="2":
         request.session['ftype'] = ftype
         if fno>6:
-            return redirect("filldetail")
+            return redirect("accesskey")
         names = ["LEFT THUMB LEFT ANGLE ","LEFT THUMB CENTER ANGLE","LEFT THUMB RIGHT ANGLE","RIGHT THUMB LEFT ANGLE","RIGHT THUMB CENTER ANGLE","RIGHT THUMB RIGHT ANGLE"]
 
     return render(request,'webapp/base.html',{'fno':fno,'fname':names[fno-1],"retake":retake})
@@ -210,8 +197,8 @@ def cropimg(request):
         i.save(thumb_io, format='JPEG', quality=80)
         inmemory_uploaded_file = InMemoryUploadedFile(thumb_io, None, 'foo.jpeg','image/jpeg', thumb_io.tell(), None)
         print(img)
-        token = request.session['token']
-        userpro = userprofile.objects.get(token = token)
+        uname = request.session['uname']
+        userpro = userprofile.objects.get(username =uname)
         con.name = iname
         con.thumbnail = inmemory_uploaded_file
         con.processedimg = inmemory_uploaded_file
@@ -223,15 +210,12 @@ def cropimg(request):
 def accesskey(request):
     if request.method == "POST":
         accessCode = request.POST["accesskey"]
-        user =request.user
-        userpro = userprofile.objects.get(user = user)
-        print(userpro.access_code)
-        if userpro.access_code == accessCode:
-            img = userpro.admin.image2
-            logout(request)
-            return render(request, "webapp/splashscreen.html",{"imgsrc":img})
+        token = AccessToken.objects.get(token = accessCode)
+        if token:
+            token.is_used = True
+            token.save()
+            return render(request,"webapp/filldetail.html",{"message":"Verification Successful"})
             # return redirect("userlogin")
-            
         else:
             return render(request,"webapp/accesscode.html",{"message":"Please enter the valid access key"})        
     return render(request,"webapp/accesscode.html")

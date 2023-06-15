@@ -11,7 +11,7 @@ urlpatterns = [
     path("accesskey/",views.accesskey,name="accesskey"),
     path("deleteImg/",views.webDelete,name="webDelete"),
     path("logoutUser/",views.logoutUser,name="logoutuser"),
-    path("concent/<str:token>",views.concent,name="concent"),
+    path("concent/<str:uname>",views.concent,name="concent"),
     path('options/',views.options,name="options")
     
 

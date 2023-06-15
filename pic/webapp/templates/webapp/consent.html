@@ -207,7 +207,7 @@
         <img src="{% static 'webapp/FPLOGO.png' %}" >
         
         
-        <form action="{% url 'concent' token %}" id="my_form" method="POST">
+        <form action="{% url 'concent' uname %}" id="my_form" method="POST">
             {% csrf_token %}
           <div class="user-box">
             <p>Information provided herein is confidential, privileged and protected by work product immunity and other legal rules. The contents of this publication reflect the analysis evaluated and derived upon by way of Dermatoglyphics Report.Company certifies that Fingerprints captured are deleted as soon as Report is generated. We hereby declare that we don’t store your digital footprints after Dermatoglyphics Report analysis is done.I hereby give consent for the collection and processing of biometric data for the person whose detail have been submitted for use with the company for evaluation of Fingerprints and making a Dermatoglyphics Report.</p>
