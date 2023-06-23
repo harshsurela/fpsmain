@@ -204,40 +204,58 @@
   {% endif %}
     <div class="login-box">
         <!-- <h1>FP World</h1> -->
-        <img src="{% static 'webapp/FPLOGO.png' %}" >
+        <img src="{% static 'webapp/fpScan.jpg' %}" >
         
         
         <form action="{% url 'concent' uname %}" id="my_form" method="POST">
             {% csrf_token %}
           <div class="user-box">
-            <p>Information provided herein is confidential, privileged and protected by work product immunity and other legal rules. The contents of this publication reflect the analysis evaluated and derived upon by way of Dermatoglyphics Report.Company certifies that Fingerprints captured are deleted as soon as Report is generated. We hereby declare that we don’t store your digital footprints after Dermatoglyphics Report analysis is done.I hereby give consent for the collection and processing of biometric data for the person whose detail have been submitted for use with the company for evaluation of Fingerprints and making a Dermatoglyphics Report.</p>
-            <label>Concent Form:</label>
-          </div>
+            <p>This Is to take permission/concent Of.</p>
+            <p>Mr./Mrs. <input type="text" name="" id="parent" required></p>
+            <p class="p-0" style="text-align: center;">Parent Of</p>
+            <p>Mr./Mrs. <input type="text" name="" id="son" required></p>
+            <p>For The Fingerprint scan that are taken.We Will use the above samples for the research and development purpose & For generation of the inborn potential Assessment report</p>
         
-          <a href="javascript:{}" onclick="document.getElementById('my_form').submit();">
+            
+            <label>Parent Concent Form:</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="agreeCheckbox" name="agreeCheckbox" required>
+            <label class="form-check-label" for="agreeCheckbox">
+              I agree to the terms and conditions
+            </label>
+          </div>
+          <a href="javascript:{}" onclick="submitForm()" >
             <span></span>
             <span></span>
             <span></span>
             <span></span>
-            Accept
+            Submit
           </a>
-          <a href="javascript:{}" onclick="logout()">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            Decline
-          </a>
+         
 
 
         </form>
       </div>
       <script>
-          function logout(){
-            window.setTimeout(function () {
-        location.href = {% url 'filldetail' %};
-    }, 0);
+        function submitForm() {
+          check=document.getElementById("agreeCheckbox").checked;
+          parent=document.getElementById("parent").value;
+          son=document.getElementById("son").value;
+          if(parent=="" || son==""){
+            alert("Please Fill the form");
+            return false;
           }
+
+          if(check==false){
+            alert("Please Agree to the terms and conditions");
+            return false;
+          }
+          else{
+          document.getElementById("my_form").submit();
+          }
+        }
       </script>
 </body>
 </html>
+

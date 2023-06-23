@@ -52,7 +52,6 @@ def filldetails(request):
     if request.method == "POST":
         username = request.POST["username"]
         fathername = request.POST["fathername"]
-        mothername = request.POST["mothername"]
         dob = request.POST["dob"]
         email = request.POST["email"]
         school = request.POST["school"]
@@ -60,7 +59,6 @@ def filldetails(request):
         contact = request.POST["contact"]
         address = request.POST["address"]
         blood= request.POST["blood"]
-        standard= request.POST["standard"]
         remarks= request.POST["remarks"]
         concent = False
         # try:
@@ -69,42 +67,44 @@ def filldetails(request):
         #         concent =True
         # except:
         #     pass
-        print(username,mothername,concent)
         # idi = request.POST["idi"]
 
         # up = User.objects.get(id = idi)
-        userpro = userprofile()
-        userpro.father_name = fathername
-        userpro.mother_name = mothername
-        userpro.DOB = datetime.datetime.strptime(dob, "%Y-%m-%d").date()
-        userpro.email = email
-        userpro.address = address
-        userpro.contactno = contact
-        userpro.username = username
-        userpro.school = school
-        userpro.consent = concent
-        userpro.bloodGroup = blood
-        userpro.standard = standard
-        userpro.remarks = remarks
-        userpro.save()
-        
-        if userpro.consent == True:
-            return redirect("options")
+        user=userprofile.objects.filter(username = username)
+        if user:
+            return render(request,"webapp/filldetail.html",{"message":"Username already exists"})
         else:
-            return render(request,"webapp/consent.html",{'uname':userpro.username})
+            userpro = userprofile()
+            userpro.father_name = fathername
+            userpro.DOB = datetime.datetime.strptime(dob, "%Y-%m-%d").date()
+            userpro.email = email
+            userpro.address = address
+            userpro.contactno = contact
+            userpro.username = username
+            userpro.school = school
+            userpro.consent = concent
+            userpro.bloodGroup = blood
+            userpro.remarks = remarks
+            userpro.save()
+            
+            if userpro.consent == True:
+                return redirect("options")
+            else:
+                return render(request,"webapp/consent.html",{'uname':userpro.username})
     # user =request.user
     # userpro = userprofile.objects.get(user = user)
-    
     return render(request,"webapp/filldetail.html")
 
 def concent(request,uname):
-    userpro = userprofile.objects.get(username =uname)
-    userpro.consent = True
-    userpro.save()
-
-    # make a session variable for username
-    request.session['uname'] = uname
-    return render(request,"options.html")
+    try:
+        userpro = userprofile.objects.get(username =uname)
+        userpro.consent = True
+        userpro.save()
+        request.session['uname'] = uname
+        return render(request,"options.html")
+    except Exception as e:
+        print(e)
+        return redirect("filldetail",{"message":"Something went wrong"})
 
 def options(request):
     print(request.POST)
@@ -157,7 +157,37 @@ def index(request,fno,retake,ftype):
         "RIGHT LITTLE Tilted towards little finger",
         "RIGHT LITTLE Center",
         "RIGHT LITTLE Tilted towards thumb"]
-
+        sentenses=["Please keep your thumb tilted toward Left.",
+                   "Please keep your thumb in center.",
+                   "Please keep your thumb tilted toward Right.",
+                   "Please keep your index finger tilted toward Left.",
+                   "Please keep your index finger in center.",
+                   "Please keep your index finger tilted toward Right.",
+                   "Please keep your middle finger tilted toward Left.",
+                   "Please keep your middle finger in center.",
+                   "Please keep your middle finger tilted toward Right.",
+                   "Please keep your ring finger tilted toward Left.",
+                   "Please keep your ring finger in center.",
+                   "Please keep your ring finger tilted toward Right.",
+                   "Please keep your little finger tilted toward Left.",
+                   "Please keep your little finger in center.",
+                   "Please keep your little finger tilted toward Right.",
+                   "Please keep your thumb tilted toward Right.",
+                   "Please keep your thumb in center.",
+                   "Please keep your thumb tilted toward Left.",
+                   "Please keep your index finger tilted toward Right.",
+                   "Please keep your index finger in center.",
+                   "Please keep your index finger tilted toward Left.",
+                   "Please keep your middle finger tilted toward Right.",
+                   "Please keep your middle finger in center.",
+                   "Please keep your middle finger tilted toward Left.",
+                   "Please keep your ring finger tilted toward Right.",
+                   "Please keep your ring finger in center.",
+                   "Please keep your ring finger tilted toward Left.",
+                   "Please keep your little finger tilted toward Right.",
+                   "Please keep your little finger in center.",
+                   "Please keep your little finger tilted toward Left."]
+        
 
         print(f"the fno -> {fno}")
     elif ftype=="2":
@@ -165,8 +195,15 @@ def index(request,fno,retake,ftype):
         if fno>6:
             return redirect("accesskey")
         names = ["LEFT THUMB LEFT ANGLE ","LEFT THUMB CENTER ANGLE","LEFT THUMB RIGHT ANGLE","RIGHT THUMB LEFT ANGLE","RIGHT THUMB CENTER ANGLE","RIGHT THUMB RIGHT ANGLE"]
+        sentenses=["Please keep your thumb tilted toward Left.",
+                     "Please keep your thumb in center.",
+                     "Please keep your thumb tilted toward Right.",
+                     "Please keep your thumb tilted toward Right.",
+                     "Please keep your thumb in center.",
+                     "Please keep your thumb tilted toward Left."]
+        
 
-    return render(request,'webapp/base.html',{'fno':fno,'fname':names[fno-1],"retake":retake})
+    return render(request,'webapp/base.html',{'fno':fno,'fname':names[fno-1],"retake":retake,"sentense":sentenses[fno-1]})
 
 @csrf_exempt
 def webDelete(request):
@@ -210,13 +247,12 @@ def cropimg(request):
 def accesskey(request):
     if request.method == "POST":
         accessCode = request.POST["accesskey"]
-        token = AccessToken.objects.get(token = accessCode)
-        if token:
-            token.is_used = True
-            token.save()
-            return render(request,"webapp/filldetail.html",{"message":"Verification Successful"})
-            # return redirect("userlogin")
-        else:
+        try:        
+            token = AccessToken.objects.get(token = accessCode)
+            if token:
+                return render(request,"webapp/filldetail.html",{"message":"Verification Successful"})
+                # return redirect("userlogin")
+        except Exception as e:
             return render(request,"webapp/accesscode.html",{"message":"Please enter the valid access key"})        
     return render(request,"webapp/accesscode.html")
 

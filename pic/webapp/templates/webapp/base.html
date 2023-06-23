@@ -97,7 +97,8 @@
 </head>
 
 <body class="text-center" >
-    <h1 id="finger-name"  style="margin-left: 10px;color: #4caf50;border-bottom: 1px solid #4caf50;">{{fname}}</h1>
+    <h1 id="finger-name"  style="margin-left: 10px;color: #4caf50;border-bottom: 1px solid #4caf50;margin-bottom:10px !important;">Scan {{fname}}</h1>
+    <p>{{sentense}}.</p>
 
     <div class="container ">
         <!-- <button class="btn btn-primary " onclick="skipbtn();">Skip</button>&nbsp; -->
@@ -218,7 +219,7 @@ var fingerNum = 1;
              var fno={{fno}};
             var next = fno+1;
             console.log("next btb"+next);
-            window.location="/capture/"+next+"/"+0;
+            window.location="/capture/"+next+"/"+0+"/"+{{request.session.ftype}};
             }
 
 

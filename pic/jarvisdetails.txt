@@ -1,0 +1,9 @@
+Username:jarvis
+Father name:Bhanubhai
+DOB:2020-10-29
+Address:ahjsgjhg
+Contact No.:8511827943
+E-mail:solanki.manish11122@gmail.com
+School:Nirma
+Blood Group:A
+Remarks:A

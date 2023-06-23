@@ -95,20 +95,21 @@ def createToken(request):
         Here the admin can create the 16 character alpha numeric access token.
         If the token is already used by other user then it will show wrong or used token.
     """
-    # generate unique token of characters of aplha numeric
-    token=""
-    for i in range(16):
-        token+=random.choice(string.ascii_letters+string.digits)
-    # check if the token is already used
-    try:
-        t = AccessToken.objects.get(token=token)
-        return render(request,"accounts/adminpage.html",{"message":"Token is already used"})
-    except:
-        t = AccessToken()
-        t.token = token
-        t.save()
-        return render(request,"accounts/adminpage.html",{"message":"Token created successfully"})
+    # generate unique tokens from CF001 to CF500
+    tokens=[]
+    for i in range(1,501):
+        tokens.append("CF"+str(i).zfill(3))
+    print(tokens)
+    # store them to acccessToken Database
+    for i in tokens:
+        token = AccessToken()
+        token.token = i
+        token.save()
+    return redirect('adminpanel')
+    # print(len(tokens))
 
+    
+       
 @login_required(login_url='admin')
 def logoutuser(request):
     """
@@ -296,7 +297,7 @@ def getfiles(request,un):
     useracc = userprofile.objects.get(username=un)
     contentu = content.objects.filter(added_by =useracc )
     f = open(f"{useracc}details.txt","w")
-    f.write(f"Username:{useracc.username}\nFather name:{useracc.father_name}\nMother Name:{useracc.mother_name}\nDOB:{useracc.DOB}\nAddress:{useracc.address}\nContact No.:{useracc.contactno}\nE-mail:{useracc.email}\nSchool:{useracc.school}\nBlood Group:{useracc.bloodGroup}\nStandard:{useracc.standard}\nRemarks:{useracc.remarks}")
+    f.write(f"Username:{useracc.username}\nFather name:{useracc.father_name}\nDOB:{useracc.DOB}\nAddress:{useracc.address}\nContact No.:{useracc.contactno}\nE-mail:{useracc.email}\nSchool:{useracc.school}\nBlood Group:{useracc.bloodGroup}\nRemarks:{useracc.remarks}")
     f.close()
 
     fn = []

@@ -31,7 +31,6 @@ class userprofile(models.Model):
     consent = models.BooleanField(default=False)
     username = models.CharField(max_length=60)
     father_name = models.CharField(max_length=60)
-    mother_name = models.CharField(max_length=60)
     DOB = models.DateField( blank=True, null=True)
     address = models.CharField(max_length=300)
     contactno = models.IntegerField(default=1)
@@ -39,7 +38,6 @@ class userprofile(models.Model):
     school = models.CharField(max_length=150)
     # subadmin = models.ForeignKey(subadminuser,null=True,on_delete=models.CASCADE)
     datajoined = models.DateField(default=datetime.date.today)
-    standard = models.CharField(max_length=100)
     bloodGroup = models.CharField(max_length=10)
     remarks=models.CharField(max_length=100,default="")
     # def save(self, *args, **kwargs):
@@ -73,6 +71,5 @@ class adminnotify(models.Model):
 
 class AccessToken(models.Model):
     token = models.CharField(max_length=100)
-    is_used=models.BooleanField(default=False)
     def __str__(self):
         return self.token

@@ -32,14 +32,7 @@ min-height: 100vh;
             <a  href="#">
               {{i.token}}
             </a>
-            <a  href="#">
-                {% if i.is_used == False %}
-                <span class="badge badge-success badge-pill">Not Used</span>
-                {% else %}
-                <span class="badge badge-danger badge-pill">Used</span>
-                {% endif %}
-              
-            </a>
+           
 
 
            <a href="{% url 'deletetoken' i.token %}" onclick="return confirm('Are you sure you want to delete this token?');" class=" float-right badge badge-primary badge-pill">delete</a>
