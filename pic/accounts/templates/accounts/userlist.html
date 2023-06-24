@@ -39,7 +39,7 @@ min-height: 100vh;
               </a> 
             </div>
 
-           <a href="{% url 'adelete' what='user' id=i.username %}" onclick="return confirm('Are you sure you want to delete this item?');" class=" float-right badge badge-primary badge-pill">delete</a>
+           <a href="{% url 'adelete' what='user' id=i.contactno %}" onclick="return confirm('Are you sure you want to delete this item?');" class=" float-right badge badge-primary badge-pill">delete</a>
             </div>
          
       {% endfor %}

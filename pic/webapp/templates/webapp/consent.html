@@ -204,10 +204,10 @@
   {% endif %}
     <div class="login-box">
         <!-- <h1>FP World</h1> -->
-        <img src="{% static 'webapp/fpScan.jpg' %}" >
+        <img src="{% static 'webapp/fpScan-R.png' %}" >
         
         
-        <form action="{% url 'concent' uname %}" id="my_form" method="POST">
+        <form action="{% url 'concent' contact %}" id="my_form" method="POST">
             {% csrf_token %}
           <div class="user-box">
             <p>This Is to take permission/concent Of.</p>
@@ -217,7 +217,7 @@
             <p>For The Fingerprint scan that are taken.We Will use the above samples for the research and development purpose & For generation of the inborn potential Assessment report</p>
         
             
-            <label>Parent Concent Form:</label>
+            <label>Parent Consent Form:</label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="checkbox" id="agreeCheckbox" name="agreeCheckbox" required>

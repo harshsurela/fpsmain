@@ -29,24 +29,24 @@ class subadminuser(models.Model):
 
 class userprofile(models.Model):
     consent = models.BooleanField(default=False)
-    username = models.CharField(max_length=60)
-    father_name = models.CharField(max_length=60)
+    username = models.CharField(max_length=60,null=True,blank=True)
+    father_name = models.CharField(max_length=60,null=True,blank=True)
     DOB = models.DateField( blank=True, null=True)
-    address = models.CharField(max_length=300)
+    address = models.CharField(max_length=300,null=True,blank=True)
     contactno = models.IntegerField(default=1)
     email = models.CharField(max_length=50)
-    school = models.CharField(max_length=150)
+    school = models.CharField(max_length=150,null=True,blank=True)
     # subadmin = models.ForeignKey(subadminuser,null=True,on_delete=models.CASCADE)
     datajoined = models.DateField(default=datetime.date.today)
-    bloodGroup = models.CharField(max_length=10)
-    remarks=models.CharField(max_length=100,default="")
+    bloodGroup = models.CharField(max_length=10,null=True,blank=True)
+    remarks=models.CharField(max_length=100,default="",null=True,blank=True)
     # def save(self, *args, **kwargs):
     #     if self.subadmin is None:  # Set default reference
     #         self.subadmin = subadminuser.objects.get(admin=self.admin)
     #     super(userprofile, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.username
+        return self.email
 
 
 

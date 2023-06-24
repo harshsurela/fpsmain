@@ -253,20 +253,20 @@ p{
             {% csrf_token %}
           <div class="user-box">
             <input type="text" name = "username" form="my_form" required>
-            <label class="required">Name</label>
+            <label >Name</label>
           </div>
           <div class="user-box">
             <input type="text" name = "fathername" form="my_form">
-            <label class="required">Father's name</label>
+            <label >Father's name</label>
           </div>
          
           <div class="user-box">
             <input type="date"id="datefield" name="dob" form="my_form" required>
-            <label class="required">DOB</label>
+            <label >DOB</label>
           </div>
           <div class="user-box">
             <input type="email" name = "email" form="my_form" required>
-            <label >email</label>
+            <label class="required">email</label>
           </div>
           <div class="user-box">
             <input type="text" name = "school" form="my_form" >
@@ -277,7 +277,7 @@ p{
             
             <textarea name="address" 
            id="address" cols="10" rows="3"  form="my_form" required></textarea>
-           <label class="required">Address</label>
+           <label>Address</label>
             
           </div>
           <div class="user-box">

@@ -364,7 +364,7 @@ def adelete(request,what,id):
     """
     if what=='user':
         print(id)
-        u = userprofile.objects.get(username=id)
+        u = userprofile.objects.get(contactno=id)
         u.delete()
     if what=='img':
         c = content.objects.get(id=id)

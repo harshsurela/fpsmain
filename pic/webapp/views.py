@@ -70,9 +70,9 @@ def filldetails(request):
         # idi = request.POST["idi"]
 
         # up = User.objects.get(id = idi)
-        user=userprofile.objects.filter(username = username)
+        user=userprofile.objects.filter(contactno = contact)
         if user:
-            return render(request,"webapp/filldetail.html",{"message":"Username already exists"})
+            return render(request,"webapp/filldetail.html",{"message":"Contact Number  already exists"})
         else:
             userpro = userprofile()
             userpro.father_name = fathername
@@ -90,21 +90,21 @@ def filldetails(request):
             if userpro.consent == True:
                 return redirect("options")
             else:
-                return render(request,"webapp/consent.html",{'uname':userpro.username})
+                return render(request,"webapp/consent.html",{'contact':userpro.contactno})
     # user =request.user
     # userpro = userprofile.objects.get(user = user)
     return render(request,"webapp/filldetail.html")
 
-def concent(request,uname):
+def concent(request,contact):
     try:
-        userpro = userprofile.objects.get(username =uname)
+        userpro = userprofile.objects.get(contactno  =contact)
         userpro.consent = True
         userpro.save()
-        request.session['uname'] = uname
+        request.session['contact'] = contact
         return render(request,"options.html")
     except Exception as e:
         print(e)
-        return redirect("filldetail",{"message":"Something went wrong"})
+        return render(request,"webapp/filldetail.html",{"message":"Something went wrong"})
 
 def options(request):
     print(request.POST)
@@ -127,36 +127,40 @@ def index(request,fno,retake,ftype):
         if fno>30:
             return redirect("filldetail")
         names = [ 
-            "LEFT THUMB Tilted towards little finger",
-        "LEFT THUMB Center",
-        "LEFT THUMB Tilted towards thumb",
-        "LEFT INDEX Tilted towards little finger",
-        "LEFT INDEX Center",
-        "LEFT INDEX Tilted towards thumb",
-        "LEFT MIDDLE Tilted towards little finger",
-        "LEFT MIDDLE Center",
-        "LEFT MIDDLE Tilted towards thumb",
-        "LEFT RING Tilted towards little finger",
-        "LEFT RING Center",
-        "LEFT RING Tilted towards thumb",
-        "LEFT LITTLE Tilted towards little finger",
-        "LEFT LITTLE Center",
-        "LEFT LITTLE Tilted towards thumb",
-        "Right Thumb Tilted towards little finger",
-        "Right Thumb Center",
-        "Right Thumb Tilted towards thumb",
-        "Right Index Tilted towards little finger",
-        "Right Index Center",
-        "Right Index Tilted towards thumb",
-        "RIGHT MIDDLE Tilted towards little finger",
-        "RIGHT MIDDLE Center",
-        "RIGHT MIDDLE Tilted towards thumb",
-        "RIGHT RING Tilted towards little finger",
-        "RIGHT RING Center",
-        "RIGHT RING Tilted towards thumb",
-        "RIGHT LITTLE Tilted towards little finger",
-        "RIGHT LITTLE Center",
-        "RIGHT LITTLE Tilted towards thumb"]
+            "LEFT THUMB",
+        "LEFT THUMB",
+        "LEFT THUMB",
+        "LEFT INDEX",
+        "LEFT INDEX",
+        "LEFT INDEX",
+        "LEFT MIDDLE",
+        "LEFT MIDDLE",
+        "LEFT MIDDLE",
+        "LEFT RING ",
+        "LEFT RING ",
+        "LEFT RING ",
+        "LEFT LITTLE",
+        "LEFT LITTLE",
+        "LEFT LITTLE",
+        "Right Thumb",
+        "Right Thumb",
+        "Right Thumb",
+        "Right Index",
+        "Right Index",
+        "Right Index",
+        "RIGHT MIDDLE",
+        "RIGHT MIDDLE",
+        "RIGHT MIDDLE",
+        "RIGHT RING",
+        "RIGHT RING",
+        "RIGHT RING",
+        "RIGHT LITTLE",
+        "RIGHT LITTLE",
+        "RIGHT LITTLE"]
+        #first alphabet capitalize each word in the string
+        names = [x.title() for x in names]
+        print(names)
+        
         sentenses=["Please keep your thumb tilted toward Left.",
                    "Please keep your thumb in center.",
                    "Please keep your thumb tilted toward Right.",
@@ -194,7 +198,9 @@ def index(request,fno,retake,ftype):
         request.session['ftype'] = ftype
         if fno>6:
             return redirect("accesskey")
-        names = ["LEFT THUMB LEFT ANGLE ","LEFT THUMB CENTER ANGLE","LEFT THUMB RIGHT ANGLE","RIGHT THUMB LEFT ANGLE","RIGHT THUMB CENTER ANGLE","RIGHT THUMB RIGHT ANGLE"]
+        names = ["LEFT THUMB","LEFT THUMB","LEFT THUMB","RIGHT THUMB","RIGHT THUMB ","RIGHT THUMB"]
+        #first alphabet capitalize each word in the string
+        names = [x.title() for x in names]
         sentenses=["Please keep your thumb tilted toward Left.",
                      "Please keep your thumb in center.",
                      "Please keep your thumb tilted toward Right.",
@@ -234,8 +240,8 @@ def cropimg(request):
         i.save(thumb_io, format='JPEG', quality=80)
         inmemory_uploaded_file = InMemoryUploadedFile(thumb_io, None, 'foo.jpeg','image/jpeg', thumb_io.tell(), None)
         print(img)
-        uname = request.session['uname']
-        userpro = userprofile.objects.get(username =uname)
+        contact = request.session['contact']
+        userpro = userprofile.objects.get(contactno =contact)
         con.name = iname
         con.thumbnail = inmemory_uploaded_file
         con.processedimg = inmemory_uploaded_file
