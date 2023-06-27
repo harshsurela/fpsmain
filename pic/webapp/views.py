@@ -165,34 +165,34 @@ def index(request,fno,retake,ftype):
         print(names)
         
         sentenses=["Please keep your thumb tilted toward Left.",
-                   "Please keep your thumb in center.",
+                   "Please keep your thumb center.",
                    "Please keep your thumb tilted toward Right.",
                    "Please keep your index finger tilted toward Left.",
-                   "Please keep your index finger in center.",
+                   "Please keep your index finger center.",
                    "Please keep your index finger tilted toward Right.",
                    "Please keep your middle finger tilted toward Left.",
-                   "Please keep your middle finger in center.",
+                   "Please keep your middle finger center.",
                    "Please keep your middle finger tilted toward Right.",
                    "Please keep your ring finger tilted toward Left.",
-                   "Please keep your ring finger in center.",
+                   "Please keep your ring finger center.",
                    "Please keep your ring finger tilted toward Right.",
                    "Please keep your little finger tilted toward Left.",
-                   "Please keep your little finger in center.",
+                   "Please keep your little finger center.",
                    "Please keep your little finger tilted toward Right.",
                    "Please keep your thumb tilted toward Right.",
-                   "Please keep your thumb in center.",
+                   "Please keep your thumb center.",
                    "Please keep your thumb tilted toward Left.",
                    "Please keep your index finger tilted toward Right.",
-                   "Please keep your index finger in center.",
+                   "Please keep your index finger center.",
                    "Please keep your index finger tilted toward Left.",
                    "Please keep your middle finger tilted toward Right.",
-                   "Please keep your middle finger in center.",
+                   "Please keep your middle finger center.",
                    "Please keep your middle finger tilted toward Left.",
                    "Please keep your ring finger tilted toward Right.",
-                   "Please keep your ring finger in center.",
+                   "Please keep your ring finger center.",
                    "Please keep your ring finger tilted toward Left.",
                    "Please keep your little finger tilted toward Right.",
-                   "Please keep your little finger in center.",
+                   "Please keep your little finger center.",
                    "Please keep your little finger tilted toward Left."]
         
 
@@ -256,13 +256,16 @@ def cropimg(request):
 def accesskey(request):
     if request.method == "POST":
         accessCode = request.POST["accesskey"]
+        print(accessCode)
         try:        
             token = AccessToken.objects.get(token = accessCode)
+            print(token)
             if token:
-                return render(request,"webpp/thankyou.html")
+                return render(request,"webapp/thankyou.html")
                 # return redirect("userlogin")
         except Exception as e:
-            return render(request,"webapp/accesscode.html",{"message":"Please enter the valid access key"})        
+            print(e)
+            return render(request,"webapp/accesscode.html",{"message":"Please enter the Correct Reference Code"})        
     return render(request,"webapp/accesscode.html")
 
 def logoutUser(request):
