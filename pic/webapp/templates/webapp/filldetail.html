@@ -252,8 +252,8 @@ p{
         <form action="{% url 'filldetail' %}" id="my_form" method="POST">
             {% csrf_token %}
           <div class="user-box">
-            <input type="text" name = "username" form="my_form" required>
-            <label >Name</label>
+            <input type="text" name = "username" form="my_form" required >
+            <label class="required">Name</label>
           </div>
           <div class="user-box">
             <input type="text" name = "fathername" form="my_form">
@@ -261,7 +261,7 @@ p{
           </div>
          
           <div class="user-box">
-            <input type="date"id="datefield" name="dob" form="my_form" required>
+            <input type="date"id="datefield" name="dob" form="my_form">
             <label >DOB</label>
           </div>
           <div class="user-box">
@@ -276,7 +276,7 @@ p{
             <!-- <input type="text-area" name = "address"> -->
             
             <textarea name="address" 
-           id="address" cols="10" rows="3"  form="my_form" required></textarea>
+           id="address" cols="10" rows="3"  form="my_form" ></textarea>
            <label>Address</label>
             
           </div>

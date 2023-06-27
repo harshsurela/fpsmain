@@ -29,12 +29,12 @@ min-height: 100vh;
       </a>
       {% for i in users %} 
           <div  class="my-3 list-group-item d-flex justify-content-between align-items-center list-group-item-action ">
-            <a  href="{% url 'usercontent' i.username %}">
+            <a  href="{% url 'usercontent' i.contactno %}">
               {{i.username}}
             </a>
 
               <div class=" col">
-              <a class="float-right badge badge-primary badge-pill" href="{% url 'download' un=i.username %}">
+              <a class="float-right badge badge-primary badge-pill" href="{% url 'download' un=i.contactno %}">
                 download
               </a> 
             </div>
@@ -49,7 +49,7 @@ min-height: 100vh;
 
     <div class="column m-5">
       <button type="button" onclick="window.location.href='{% url 'adminpanel' %}'"  class="btn btn-info my-3">Home</button>
-      <button type="button" onclick="window.location.href='{% url 'filteruser' who='a' %}'"  class="btn btn-info my-3">Filter user</button>
+      <!-- <button type="button" onclick="window.location.href='{% url 'filteruser' who='a' %}'"  class="btn btn-info my-3">Filter user</button> -->
       <button type="button" onclick="window.location.href='{% url 'logout' %}'" class="btn btn-danger">Logout</button>
     </div>
 

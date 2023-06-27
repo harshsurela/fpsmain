@@ -76,7 +76,10 @@ def filldetails(request):
         else:
             userpro = userprofile()
             userpro.father_name = fathername
-            userpro.DOB = datetime.datetime.strptime(dob, "%Y-%m-%d").date()
+            if dob != "":
+                userpro.DOB = datetime.datetime.strptime(dob, "%Y-%m-%d").date()
+            else:
+                userpro.DOB = datetime.datetime.strptime("1812-01-01", "%Y-%m-%d").date()
             userpro.email = email
             userpro.address = address
             userpro.contactno = contact
@@ -125,7 +128,7 @@ def index(request,fno,retake,ftype):
     if(ftype=="10"):
         request.session['ftype'] = ftype
         if fno>30:
-            return redirect("filldetail")
+            return redirect("accesskey")
         names = [ 
             "LEFT THUMB",
         "LEFT THUMB",
@@ -197,7 +200,7 @@ def index(request,fno,retake,ftype):
     elif ftype=="2":
         request.session['ftype'] = ftype
         if fno>6:
-            return redirect("accesskey")
+            return redirect("thankyou")
         names = ["LEFT THUMB","LEFT THUMB","LEFT THUMB","RIGHT THUMB","RIGHT THUMB ","RIGHT THUMB"]
         #first alphabet capitalize each word in the string
         names = [x.title() for x in names]
@@ -256,7 +259,7 @@ def accesskey(request):
         try:        
             token = AccessToken.objects.get(token = accessCode)
             if token:
-                return render(request,"webapp/filldetail.html",{"message":"Verification Successful"})
+                return render(request,"webpp/thankyou.html")
                 # return redirect("userlogin")
         except Exception as e:
             return render(request,"webapp/accesscode.html",{"message":"Please enter the valid access key"})        
@@ -265,3 +268,7 @@ def accesskey(request):
 def logoutUser(request):
     logout(request)
     return redirect("userlogin")
+
+def thankyou(request):
+    print("In Thank You")
+    return render(request,"webapp/thankyou.html")

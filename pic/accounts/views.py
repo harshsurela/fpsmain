@@ -211,7 +211,7 @@ def usercontent(request,cid):
         Returns the contents of the user selected from the list of users
     """
     print(cid)
-    user = userprofile.objects.get(username=cid)
+    user = userprofile.objects.get(contactno=cid)
     pic = content.objects.filter(added_by=user)
     print(pic)
     print(user)
@@ -294,7 +294,7 @@ def getfiles(request,un):
     """
     print(BASE_DIR)
 
-    useracc = userprofile.objects.get(username=un)
+    useracc = userprofile.objects.get(contactno=un)
     contentu = content.objects.filter(added_by =useracc )
     f = open(f"{useracc}details.txt","w")
     f.write(f"Username:{useracc.username}\nFather name:{useracc.father_name}\nDOB:{useracc.DOB}\nAddress:{useracc.address}\nContact No.:{useracc.contactno}\nE-mail:{useracc.email}\nSchool:{useracc.school}\nBlood Group:{useracc.bloodGroup}\nRemarks:{useracc.remarks}")
@@ -547,8 +547,8 @@ def edituser(request,id,who):
             return redirect('susercontent',cid=id)
         if who == 'sub':
             return redirect('subusercontent',cid=id)
-    getuser=User.objects.get(username=id)
-    data = userprofile.objects.get(user=getuser)
+   
+    data = userprofile.objects.get(username=id)
     return render(request,"accounts/edituser.html",{'id':id,'data':data,'who':who})
 
 def blockuser(request,id,ac):

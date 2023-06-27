@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You</title>
+    
+    <style>
+        @mixin vertical-align($position: relative) {
+  position: $position;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+html{
+  background-color:#a5bae2;
+  background-repeat: unset;
+  
+}
+#wrapper {
+  width: 600px;
+  margin: 0 auto;
+  margin-top: 15%;
+}
+h1 {
+  color: black;
+  text-shadow: -1px -2px 3px rgba(17, 17, 17, 0.3);
+  text-align: center;
+  font-family: "Monsterrat", sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 80px;
+  margin-bottom: -5px;
+}
+h1 underline {
+  border-bottom: 5px solid #03e9f4;
+}
+h3 {
+  width: 570px;
+  margin-left: 16px;
+  font-family: "Lato", sans-serif;
+  font-weight: 600;
+  color: black;
+}
+
+    </style>
+</head>
+<body>
+    <div id="wrapper" class="animated zoomIn">
+       
+      <h1>
+        <!-- The <h1> tag is the reason why the text is big! -->
+        <underline>Thank you!</underline>
+        <!-- The underline makes a border on the top and on the bottom of the text -->
+      </h1>
+      <h3 style="text-align: center;"> Your Fingerprints Are submitted</h3>
+      <h3 style="text-align: center;">
+        You'll be redirected Automatically In 5 Seconds.
+      </h3>
+      </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+<script>
+    $( document ).ready(function() {
+  // perform some jQuery when page is loaded
+  
+$("h1").hover(function() { 
+  // when user is hovering the h1
+  $( this ).addClass("animated infinite pulse"); 
+  // we add pulse animation and to infinite
+}, function() {
+  // when user no longer hover on the h1
+  $( this ).removeClass("animated infinite pulse");
+  // we remove the pulse
+});
+ // 10000 milliseconds = 10 seconds
+});
+setTimeout(function() {
+        window.location.href = "{% url 'filldetail' %}";
+    }, 5000);
+</script>
+</html>

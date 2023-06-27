@@ -12,7 +12,8 @@ urlpatterns = [
     path("deleteImg/",views.webDelete,name="webDelete"),
     path("logoutUser/",views.logoutUser,name="logoutuser"),
     path("concent/<str:contact>",views.concent,name="concent"),
-    path('options/',views.options,name="options")
+    path('options/',views.options,name="options"),
+    path('thankyou/',views.thankyou,name="thankyou"),
     
 
 ]

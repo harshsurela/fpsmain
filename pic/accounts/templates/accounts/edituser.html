@@ -189,23 +189,19 @@
         <form action="{% url 'edituser' id=id who=who%}" id="my_form" method="POST">
             {% csrf_token %}
           <div class="user-box">
-            <label>Username</label>
+            <label>Name</label>
             <input type="text"  name="username" value="{{data.user}}">
 
           </div>
 
           <div class="user-box">
-            <label>Fathername</label>
+            <label>Father's name</label>
             <input type="text" name="fn" value="{{data.father_name}}">
 
           </div>
 
 
-          <div class="user-box">
-            <label>Mothername</label>
-            <input type="text" name="mn" value="{{data.mother_name}}">
-
-          </div>
+      
 
 
           <div class="user-box">
@@ -236,15 +232,9 @@
           </div>
 
 
+          
           <div class="user-box">
-            <label>Idno</label>
-            <input type="text" name="idno" value="{{data.idno}}">
-
-          </div>
-
-
-          <div class="user-box">
-            <label>Access code</label>
+            <label>Reference code</label>
             <input type="text" name="access" value="{{data.access_code}}">
 
           </div>
