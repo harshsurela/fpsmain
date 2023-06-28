@@ -310,7 +310,7 @@ def getfiles(request,un):
 
             processed.append(u.processedimg.path)
     filenames = fn+processed
-    print(filenames)
+    print("File Names",filenames)
     # print(os.path.abspath(f"{useracc}details.txt"))
     filenames.append(os.path.abspath(f"{useracc}details.txt"))
 

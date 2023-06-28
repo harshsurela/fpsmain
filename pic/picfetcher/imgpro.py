@@ -151,4 +151,4 @@ def main(imgpath,imgpropath):
 
 if __name__ == "__main__":
 	# main()
-	print(sys.argv)
+	print("ji"+sys.argv)

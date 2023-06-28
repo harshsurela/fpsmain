@@ -165,37 +165,47 @@ def index(request,fno,retake,ftype):
         print(names)
         
         sentenses=["Please keep your thumb tilted toward Left.",
-                   "Please keep your thumb center.",
+                   "Please keep your thumb centre.",
                    "Please keep your thumb tilted toward Right.",
                    "Please keep your index finger tilted toward Left.",
-                   "Please keep your index finger center.",
+                   "Please keep your index finger centre.",
                    "Please keep your index finger tilted toward Right.",
                    "Please keep your middle finger tilted toward Left.",
-                   "Please keep your middle finger center.",
+                   "Please keep your middle finger centre.",
                    "Please keep your middle finger tilted toward Right.",
                    "Please keep your ring finger tilted toward Left.",
-                   "Please keep your ring finger center.",
+                   "Please keep your ring finger centre.",
                    "Please keep your ring finger tilted toward Right.",
                    "Please keep your little finger tilted toward Left.",
-                   "Please keep your little finger center.",
+                   "Please keep your little finger centre.",
                    "Please keep your little finger tilted toward Right.",
                    "Please keep your thumb tilted toward Right.",
-                   "Please keep your thumb center.",
+                   "Please keep your thumb centre.",
                    "Please keep your thumb tilted toward Left.",
                    "Please keep your index finger tilted toward Right.",
-                   "Please keep your index finger center.",
+                   "Please keep your index finger centre.",
                    "Please keep your index finger tilted toward Left.",
                    "Please keep your middle finger tilted toward Right.",
-                   "Please keep your middle finger center.",
+                   "Please keep your middle finger centre.",
                    "Please keep your middle finger tilted toward Left.",
                    "Please keep your ring finger tilted toward Right.",
-                   "Please keep your ring finger center.",
+                   "Please keep your ring finger centre.",
                    "Please keep your ring finger tilted toward Left.",
                    "Please keep your little finger tilted toward Right.",
-                   "Please keep your little finger center.",
+                   "Please keep your little finger centre.",
                    "Please keep your little finger tilted toward Left."]
-        
-
+#  save files with names like  
+# L1 - Left , L1 - Centre ,L1 - Right
+# L2 - Left , L2 - Centre ,L2 - Right
+# L3 - Left , L3 - Centre ,L3 - Right
+# L4 - Left , L4 - Centre ,L4 - Right
+# L5 - Left , L5 - Centre ,L5 - Right	
+# R1 - Reft , R1 - Centre ,R1 - Right
+# R2 - Reft , R2 - Centre ,R2 - Right
+# R3 - Reft , R3 - Centre ,R3 - Right
+# R4 - Reft , R4 - Centre ,R4 - Right
+# R5 - Reft , R5 - Centre ,R5 - Right
+        fileSaveList=["L1-Left","L1-Centre","L1-Right","L2-Left","L2-Centre","L2-Right","L3-Left","L3-Centre","L3-Right","L4-Left","L4-Centre","L4-Right","L5-Left","L5-Centre","L5-Right","R1-Left","R1-Centre","R1-Right","R2-Left","R2-Centre","R2-Right","R3-Left","R3-Centre","R3-Right","R4-Left","R4-Centre","R4-Right","R5-Left","R5-Centre","R5-Right"]      
         print(f"the fno -> {fno}")
     elif ftype=="2":
         request.session['ftype'] = ftype
@@ -205,14 +215,14 @@ def index(request,fno,retake,ftype):
         #first alphabet capitalize each word in the string
         names = [x.title() for x in names]
         sentenses=["Please keep your thumb tilted toward Left.",
-                     "Please keep your thumb in center.",
+                     "Please keep your thumb in centre.",
                      "Please keep your thumb tilted toward Right.",
                      "Please keep your thumb tilted toward Right.",
-                     "Please keep your thumb in center.",
+                     "Please keep your thumb in centre.",
                      "Please keep your thumb tilted toward Left."]
         
-
-    return render(request,'webapp/base.html',{'fno':fno,'fname':names[fno-1],"retake":retake,"sentense":sentenses[fno-1]})
+        fileSaveList=["L1-Left","L1-Centre","L1-Right","R1-Right","R1-Centre","R1-Left"]
+    return render(request,'webapp/base.html',{'fno':fno,'fname':names[fno-1],"retake":retake,"sentense":sentenses[fno-1],"fileSaveList":fileSaveList[fno-1]})
 
 @csrf_exempt
 def webDelete(request):

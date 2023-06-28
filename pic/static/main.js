@@ -42,6 +42,7 @@ input.addEventListener('change', ()=>{
 })
 var idResponse = "";
 function upload(file) {
+
     console.log ("=======> "+  fname)
     var input = document.querySelector('input[type=file]');
     var fd = new FormData();
