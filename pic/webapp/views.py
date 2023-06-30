@@ -271,6 +271,9 @@ def accesskey(request):
             token = AccessToken.objects.get(token = accessCode)
             print(token)
             if token:
+                user = userprofile.objects.get(contactno = request.session['contact'])
+                user.reference_code = accessCode
+                user.save()
                 return render(request,"webapp/thankyou.html")
                 # return redirect("userlogin")
         except Exception as e:

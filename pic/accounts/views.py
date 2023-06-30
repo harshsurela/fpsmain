@@ -312,7 +312,7 @@ def getfiles(request,un):
     filenames = fn+processed
     print("File Names",filenames)
     # print(os.path.abspath(f"{useracc}details.txt"))
-    filenames.append(os.path.abspath(f"{useracc}details.txt"))
+    filenames.append(os.path.abspath(f"{useracc.username}details.txt"))
 
     zip_subdir = "FPworld "+str(useracc.username)
     zip_filename = "%s.zip" % zip_subdir

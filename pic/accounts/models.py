@@ -40,6 +40,7 @@ class userprofile(models.Model):
     datajoined = models.DateField(default=datetime.date.today)
     bloodGroup = models.CharField(max_length=10,null=True,blank=True)
     remarks=models.CharField(max_length=100,default="",null=True,blank=True)
+    reference_code=models.CharField(max_length=100,default="No Reference Code Provided",null=True,blank=True)
     # def save(self, *args, **kwargs):
     #     if self.subadmin is None:  # Set default reference
     #         self.subadmin = subadminuser.objects.get(admin=self.admin)
