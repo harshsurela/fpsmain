@@ -297,7 +297,7 @@ def getfiles(request,un):
     useracc = userprofile.objects.get(contactno=un)
     contentu = content.objects.filter(added_by =useracc )
     f = open(f"{useracc}details.txt","w")
-    f.write(f"Username:{useracc.username}\nFather name:{useracc.father_name}\nDOB:{useracc.DOB}\nAddress:{useracc.address}\nContact No.:{useracc.contactno}\nE-mail:{useracc.email}\nSchool:{useracc.school}\nBlood Group:{useracc.bloodGroup}\nRemarks:{useracc.remarks}")
+    f.write(f"Username:{useracc.username}\nFather name:{useracc.father_name}\nDOB:{useracc.DOB}\nAddress:{useracc.address}\nContact No.:{useracc.contactno}\nE-mail:{useracc.email}\nSchool:{useracc.school}\nBlood Group:{useracc.bloodGroup}\nRemarks:{useracc.remarks}\nReference Code :{useracc.reference_code}")
     f.close()
 
     fn = []
@@ -312,7 +312,7 @@ def getfiles(request,un):
     filenames = fn+processed
     print("File Names",filenames)
     # print(os.path.abspath(f"{useracc}details.txt"))
-    filenames.append(os.path.abspath(f"{useracc.username}details.txt"))
+    filenames.append(os.path.abspath(f"{useracc.email}details.txt"))
 
     zip_subdir = "FPworld "+str(useracc.username)
     zip_filename = "%s.zip" % zip_subdir

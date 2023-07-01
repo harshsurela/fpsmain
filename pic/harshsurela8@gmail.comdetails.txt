@@ -1,9 +1,0 @@
-Username:demo
-Father name:
-DOB:1812-01-01
-Address:
-Contact No.:6544567657
-E-mail:harshsurela8@gmail.com
-School:
-Blood Group:
-Remarks:
