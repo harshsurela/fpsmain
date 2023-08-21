@@ -1,154 +1,63 @@
 import cv2 as cv
 import numpy as np
 import sys
-'''
- Function to map values in range [in_min, in_max] to the range [out_min, out_max]
-'''
-def map(x, in_min, in_max, out_min, out_max):
-	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
 
+def map_range(x, in_min, in_max, out_min, out_max):
+    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
 
-# global variables for image ,blackPoint, whitePoint
-img = None; whitePoint = None; blackPoint = None
+def apply_high_pass_filter(image, kernel_size):
+    if kernel_size % 2 == 0:
+        kernel_size += 1
+    kernel = np.ones((kernel_size, kernel_size), np.float32) / (kernel_size * kernel_size)
+    filtered = cv.filter2D(image, -1, kernel)
+    filtered = image.astype('float32') - filtered.astype('float32')
+    filtered = filtered + 127 * np.ones(image.shape, np.uint8)
+    filtered = filtered.astype('uint8')
+    return filtered
 
+def adjust_black_point(image, black_point):
+    adjusted_image = map_range(image.astype('int32'), black_point, 255, 0, 255)
+    _, adjusted_image = cv.threshold(adjusted_image, 0, 255, cv.THRESH_TOZERO)
+    adjusted_image = adjusted_image.astype('uint8')
+    return adjusted_image
 
-'''
- * High Pass Filter
- * Output of HPF depends on the kernel size provided as input argument
- * Links to the docuementation:
- *  Introduction: https://github.com/sourabhkhemka/DocumentScanner/wiki/Scan:-Introduction
- *  HPF: https://github.com/sourabhkhemka/DocumentScanner/wiki/GCMODE
- *
-'''
-def highPassFilter(kSize):
-	global img
+def adjust_white_point(image, white_point):
+    _, adjusted_image = cv.threshold(image, white_point, 255, cv.THRESH_TRUNC)
+    adjusted_image = map_range(adjusted_image.astype('int32'), 0, white_point, 0, 255)
+    adjusted_image = adjusted_image.astype('uint8')
+    return adjusted_image
 
-	print("applying high pass filter")
+def apply_black_and_white_conversion(image):
+    lab = cv.cvtColor(image, cv.COLOR_BGR2LAB)
+    (l, a, b) = cv.split(lab)
+    bw_image = cv.add(cv.subtract(l, b), cv.subtract(l, a))
+    return bw_image
 
-	if not kSize%2:
-		kSize +=1
+def main(input_image_path, output_image_path):
+    image = cv.imread(input_image_path)
+    black_point = 25
+    white_point = 225
+    mode = "SMODE"
 
-	kernel = np.ones((kSize,kSize),np.float32)/(kSize*kSize)
+    if mode == "GCMODE":
+        image = apply_high_pass_filter(image, kernel_size=51)
+        white_point = 127
+        image = adjust_white_point(image, white_point)
+        image = adjust_black_point(image, black_point)
+    elif mode == "RMODE":
+        image = adjust_black_point(image, black_point)
+        image = adjust_white_point(image, white_point)
+    elif mode == "SMODE":
+        image = adjust_black_point(image, black_point)
+        image = adjust_white_point(image, white_point)
+        image = apply_black_and_white_conversion(image)
 
-	filtered = cv.filter2D(img,-1,kernel)
-
-	filtered = img.astype('float32') - filtered.astype('float32')
-	filtered = filtered + 127*np.ones(img.shape, np.uint8)
-
-	filtered = filtered.astype('uint8')
-
-	img = filtered
-
-	# "img" now contains high pass filtered image.
-
-
-
-'''
- * Method to select black point in the image
- *
- * Links to documentation:
- *  Introduction: https://github.com/sourabhkhemka/DocumentScanner/wiki/Scan:-Introduction
- *  Black Point Select: https://github.com/sourabhkhemka/DocumentScanner/wiki/Black-Point-Select
-'''
-def blackPointSelect():
-	global img
-
-	print("adjusting black point for final output ...")
-
-	# refer repository's wiki page for detailed explanation
-
-	img = img.astype('int32')
-
-	img = map(img, blackPoint, 255, 0, 255)
-
-	#if cv.__version__ == '3.4.4':
-		#img = img.astype('uint8')
-
-	_, img = cv.threshold(img, 0, 255, cv.THRESH_TOZERO)
-
-	img = img.astype('uint8')
-	print("done")
-
-'''
- * Method to select whitePoint in the image
- *
- * Links to documentation:
- *  Introduction: https://github.com/sourabhkhemka/DocumentScanner/wiki/Scan:-Introduction
- *  White Point Select: https://github.com/sourabhkhemka/DocumentScanner/wiki/White-Point-Select
-'''
-def whitePointSelect():
-	global img
-
-	print("white point selection running ...")
-
-	# refer repository's wiki page for detailed explanation
-
-	_,img = cv.threshold(img, whitePoint, 255, cv.THRESH_TRUNC)
-
-	img = img.astype('int32')
-	img = map(img, 0, whitePoint, 0, 255)
-	img = img.astype('uint8')
-
-
-'''
- * Method to select black point in the image
- *
- * Links to documentation:
- *  Introduction: https://github.com/sourabhkhemka/DocumentScanner/wiki/Scan:-Introduction
- *  Black Point Select: https://github.com/sourabhkhemka/DocumentScanner/wiki/Black-Point-Select
- *
-'''
-def blackAndWhite():
-	global img
-
-	# refer repository's wiki page for detailed explanation
-
-	lab = cv.cvtColor(img, cv.COLOR_BGR2LAB)
-
-	(l,a,b) = cv.split(lab)
-
-	img = cv.add( cv.subtract(l,b), cv.subtract(l,a) )
-
-
-
-
-def main(imgpath,imgpropath):
-	print("test case in imgpro")
-	print(imgpath)
-	global img
-	global blackPoint
-	global whitePoint
-	img = cv.imread(imgpath)
-
-	# define values for blackPoint and whitePoint
-	blackPoint = 25
-	whitePoint = 225
-
-	# store desired mode of operation as string
-	mode = "SMODE"
-
-	if mode == "GCMODE":
-		highPassFilter(kSize = 51)
-		whitePoint = 127
-		whitePointSelect()
-		blackPointSelect()
-	elif mode == "RMODE":
-		blackPointSelect()
-		whitePointSelect()
-	elif mode == "SMODE":
-		blackPointSelect()
-		whitePointSelect()
-		blackAndWhite()
-
-
-
-	print("\ndone.")
-
-	cv.imwrite(imgpropath, img)
-	print("finish")
-	# cv.imshow("final", cv.resize(img,None,fx=0.125, fy=0.125, interpolation = cv.INTER_CUBIC))
-	# cv.waitKey(0)
+    cv.imwrite(output_image_path, image)
 
 if __name__ == "__main__":
-	# main()
-	print("ji"+sys.argv)
+    if len(sys.argv) != 3:
+        print("Usage: python script_name.py input_image_path output_image_path")
+    else:
+        input_path = sys.argv[1]
+        output_path = sys.argv[2]
+        main(input_path, output_path)
