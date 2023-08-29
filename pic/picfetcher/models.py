@@ -28,8 +28,6 @@ class PathAndRename(object):
         else:
             # set filename as random string
             filename = '{}.{}'.format(uuid4().hex, ext)
-           
-      
         # return the whole path to the file
         return os.path.join(self.path, filename)
 
@@ -68,8 +66,7 @@ class content(models.Model):
 
             # cv2.imwrite(self.processedimg.path,th1)
             print("about to call imgpro...")
-               
-            
+
             imgpro.main(self.thumbnail.path,self.processedimg.path)
 
             # pa = re.search('/pics/(.+?).png',self.thumbnail.path).group(1)
@@ -125,5 +122,3 @@ class content(models.Model):
             #         "JPEG",
             #         optimize = True,
             #         quality = 80)
-
-
