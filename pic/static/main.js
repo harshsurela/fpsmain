@@ -98,9 +98,10 @@ function retakeResponse(fno){
            console.log(response.data)
            document.querySelector('input[type="file"]').click();
            var canvas = document.getElementById('image-box2');
-           canvas.innerHTML="";
            var confirmbtn = document.getElementById('conformationBtn');
-            confirmbtn.style.display='none';
+           confirmbtn.style.display='none';
+           $('#processedimg').atrr('src','');
+           canvas.innerHTML="";
         //    window.location="/capture/"+fno+"/"+1;
         }
     });

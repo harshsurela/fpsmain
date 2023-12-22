@@ -230,9 +230,12 @@ def webDelete(request):
   idi = request.POST.get("idi")
   print(idi)
   ck = content.objects.get(id=idi)
-  path = ck.thumbnail
-
+#   path = ck.thumbnail
+  print("In Delete")
   ck.delete()
+  print("deleted")
+#   os.remove(path.path)
+  
   return JsonResponse({"message":"done"},status=201)
 
 
@@ -247,6 +250,7 @@ def cropimg(request):
     # print(request.FILES)
     if request.method == "POST":
         img = request.FILES['file']
+        print("Images: ",img)
         i = Image.open(img)
         i = i.convert('RGB')
         thumb_io = BytesIO()
