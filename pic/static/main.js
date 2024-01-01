@@ -102,6 +102,8 @@ function retakeResponse(fno){
            confirmbtn.style.display='none';
            $('#processedimg').atrr('src','');
            canvas.innerHTML="";
+        //    delete blob variable 
+            delete blob;
         //    window.location="/capture/"+fno+"/"+1;
         }
     });

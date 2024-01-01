@@ -8,14 +8,35 @@ var fname= document.getElementById("finger-name").textContent;
 var imagId = 0;
 const csrf = document.getElementsByName('csrfmiddlewaretoken')
 
+var $image = $('#rawimg').cropper({
+    aspectRatio: 7 / 9,
+    crop: function (event) {
+        console.log('Cropping Details...');
+        console.log(event.detail.x);
+        console.log(event.detail.y);
+        console.log(event.detail.width);
+        console.log(event.detail.height);
+        console.log(event.detail.rotate);
+        console.log(event.detail.scaleX);
+        console.log(event.detail.scaleY);
+    }
+});
+
+
 input.addEventListener('change', ()=>{
+
+    if ($image.data('cropper')) {
+        $image.cropper('destroy');
+    }
+
     // alertBox.innerHTML = ""
     confirmBtn.classList.remove('not-visible')
     const img_data = input.files[0]
+    console.log("image_data")
+    console.log(img_data)
     const url = URL.createObjectURL(img_data)
-
     imageBox.innerHTML = `<img src="${url}" class="img-thumbnail" id="rawimg"   >`
-    var $image = $('#rawimg')
+    $image = $('#rawimg')
     console.log($image)
     console.log("---------------")
     $image.cropper({
@@ -31,16 +52,21 @@ input.addEventListener('change', ()=>{
             console.log(event.detail.scaleY);
         }
     });
-    
-    var cropper = $image.data('cropper');
-    console.log("--------------->")
-    confirmBtn.addEventListener('click', ()=>{
-        cropper.getCroppedCanvas().toBlob((blob) => {
-            console.log('confirmed')
-            upload(blob)
-        })
-    });
+    confirmBtn.removeEventListener('click', confirmButtonClickHandler);
+    confirmBtn.addEventListener('click', confirmButtonClickHandler);
+
 })
+
+function confirmButtonClickHandler() {
+    console.log("Cropper image data")
+    console.log($image.data('cropper'));
+    $image.cropper('getCroppedCanvas').toBlob((blob) => {
+        console.log('Confirmed');
+        upload(blob);
+    });
+}
+
+
 var idResponse = "";
 function upload(file) {
     console.log ("=======> in Upload  "+  fname)
@@ -48,11 +74,16 @@ function upload(file) {
     var fd = new FormData();
     console.log("============cccccccccc=======");
     // Check file selected or not
-    
-    fd.append('file',file,fname+".png"),
-    fd.append('iname',fname)
+
+    fd.append('file',file,fname+".png");
+    fd.append('iname',fname);
     // console.log("files")
-    
+    console.log("FD:")
+    console.log(fd)
+    fd.forEach(function(value, key){
+        console.log(key+" "+value)
+    });
+
     var load = document.getElementById("load");
     load.style.display = "block";
     $.ajax({
@@ -72,7 +103,7 @@ function upload(file) {
             confirmbtn.style.display='block';
             console.log("the line is executed");
            canvas.innerHTML = `<img src="/media/`+response.data+`" class="img-thumbnail" id="processedimg"   >`
-            
+
 
         }
     });
@@ -89,7 +120,13 @@ function retakeResponse(fno) {
         data: { "idi": imagId },
         success: function (response) {
             console.log(response.data);
-            document.querySelector('input[type="file"]').click();
+            imageBox.innerHTML = '';
+            if ($image.data('cropper')) {
+                $image.cropper('destroy');
+            }
+            // Reset the imagId
+            imagId = 0;
+
             var canvas = document.getElementById('image-box2');
             var confirmbtn = document.getElementById('conformationBtn');
             confirmbtn.style.display = 'none';
@@ -97,8 +134,10 @@ function retakeResponse(fno) {
             canvas.innerHTML = '';
             // Reset the cropper
             $('#rawimg').cropper('destroy');
-            // Reset the imagId
-            imagId = 0;
+
+            document.querySelector('input[type="file"]').click();
+
+
         }
     });
 }
